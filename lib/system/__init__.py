@@ -26,9 +26,19 @@ def get_IP():
     local_ip = socket.gethostbyname(get_hostname())
     return local_ip
 
+
+def verificar_conexao(host="8.8.8.8", port=53, timeout=3):
+    try:
+        socket.setdefaulttimeout(timeout)
+        socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host,port))
+        return "Online"
+    except socket.error:
+        return "Offline"
+    
 def exibir_infos():
     cabecalho("NETWATCH V1")
     print(f"Hostname: {get_hostname()}")
     print(f"System: {get_systemop()}")
     print(f"IP Local: {get_IP()}")
     print(f"MAC: {get_mac_adress()}")
+    print(f"Status da conexão: {verificar_conexao()}")
